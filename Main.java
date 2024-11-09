@@ -3,7 +3,7 @@ public class Main {
         String path = "nomes\\female_names.csv";
 
         TabelaHash hashTable = new TabelaHash();
-
+        //hashTable.printTabela();
         long inicioInsercao = System.nanoTime();
         hashTable.loadDados(path);
         long fimInsercao = System.nanoTime();
