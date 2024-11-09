@@ -6,10 +6,12 @@ public class Main {
         hashTable.loadDados(path);
         hashTable.printTabela();
 
-        String chave = "Johanna";
+        String chave = "Dione";
         String[] resultado = hashTable.buscar(chave);
         if(resultado != null){
-            System.out.println("Nome: " + resultado[0]);
+            System.out.println("------------------------------------");
+            System.out.println("Nome: " + resultado[0] + "\nÍndice: " + hashTable.funcaoHash(chave));
+            System.out.println("------------------------------------");
         } else {
             System.out.println("nome não encontrado 😫");
         }

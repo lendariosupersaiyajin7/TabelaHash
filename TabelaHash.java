@@ -33,7 +33,7 @@ public class TabelaHash {
 
 
 
-    private int funcaoHash(String chave) {
+    public int funcaoHash(String chave) {
         int hash = 0;
         for(int i = 0; i < chave.length(); i++){
             hash = (25 * hash + chave.charAt(i)) % tamanho;
@@ -60,11 +60,13 @@ public class TabelaHash {
 
     public void printTabela() {
         for(int i = 0; i < tamanho; i++){
-            System.out.println("Índice: " + i + " - ");
+            System.out.print("Índice: " + i + ": ");
+
             for(String[] dado : tabela.get(i)){
-                System.out.println(dado[0] + " ");
+                System.out.print(dado[0] + ", ");
             }
             System.out.println();
         }
     }
+    
 }
