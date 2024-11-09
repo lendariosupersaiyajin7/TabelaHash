@@ -8,18 +8,19 @@ import java.util.List;
 public class TabelaHash {
     List<LinkedList<String[]>> tabela;
     int tamanho = 7927;
-    
+    int[] colisoes;  // Array para contar as colisões
+
     public TabelaHash() {
         tabela = new ArrayList<>(tamanho);
+        colisoes = new int[tamanho];  // Inicializa o array de colisões
         for(int i = 0; i < tamanho; i++){
             tabela.add(new LinkedList<>());
+            colisoes[i] = 0;  // Inicializa a contagem de colisões em zero
         }
     }
 
-
-
     public void loadDados(String path) {
-        try(BufferedReader br = new BufferedReader(new FileReader(path))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(path))) {
             String linha;
 
             while((linha = br.readLine()) != null){
@@ -31,9 +32,7 @@ public class TabelaHash {
         }
     }
 
-
-
-    public int funcaoHash(String chave) {
+    private int funcaoHash(String chave) {
         int hash = 0;
         for(int i = 0; i < chave.length(); i++){
             hash = (25 * hash + chave.charAt(i)) % tamanho;
@@ -44,6 +43,13 @@ public class TabelaHash {
     public void inserir(String[] dado) {
         String chave = dado[0];
         int index = funcaoHash(chave);
+
+        // Verifica se já existe algum dado nesta posição (indica uma colisão)
+        if (!tabela.get(index).isEmpty()) {
+            colisoes[index]++;  // Incrementa a contagem de colisões
+        }
+
+        // Insere o novo dado na lista encadeada
         tabela.get(index).add(dado);
     }
 
@@ -59,14 +65,23 @@ public class TabelaHash {
     }
 
     public void printTabela() {
-        for(int i = 0; i < tamanho; i++){
-            System.out.print("Índice: " + i + ": ");
-
-            for(String[] dado : tabela.get(i)){
-                System.out.print(dado[0] + ", ");
+        for (int i = 0; i < tamanho; i++) {
+            System.out.print("Índice: " + i + " - ");
+            System.out.println("Colisões: " + colisoes[i]);
+            for (String[] dado : tabela.get(i)) {
+                System.out.print(dado[0] + " ");
             }
             System.out.println();
         }
     }
-    
+
+    // Método para imprimir as colisões por índice
+    public void printColisoes() {
+        System.out.println("\nContagem de Colisões por Índice:");
+        for (int i = 0; i < tamanho; i++) {
+            if (colisoes[i] > 0) {
+                System.out.println("Índice " + i + " - " + colisoes[i] + " colisões");
+            }
+        }
+    }
 }
