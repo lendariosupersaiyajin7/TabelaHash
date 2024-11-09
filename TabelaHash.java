@@ -76,7 +76,6 @@ public class TabelaHash {
         }
     }
 
-    // Método para gerar relatório com colisões, tempos e distribuição das chaves
     public void gerarRelatorio(long tempoInsercao, long tempoBusca) {
         System.out.println("\n===== RELATÓRIO =====");
         System.out.println("\nTotal de colisões: " + totalColisoes);
