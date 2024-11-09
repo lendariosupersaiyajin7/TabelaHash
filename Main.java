@@ -5,13 +5,12 @@ public class Main {
         TabelaHash hashTable = new TabelaHash();
         hashTable.loadDados(path);
         hashTable.printTabela();
+        hashTable.printTotalColisoes();
 
-        String chave = "Dione";
+        String chave = "Johnna";
         String[] resultado = hashTable.buscar(chave);
         if(resultado != null){
-            System.out.println("------------------------------------");
-            System.out.println("Nome: " + resultado[0] + "\nÍndice: " + hashTable.funcaoHash(chave));
-            System.out.println("------------------------------------");
+            System.out.println("Nome: " + resultado[0]);
         } else {
             System.out.println("nome não encontrado 😫");
         }

@@ -8,11 +8,13 @@ import java.util.List;
 public class TabelaHash {
     List<LinkedList<String[]>> tabela;
     int tamanho = 7927;
-    int[] colisoes;  // Array para contar as colisões
+    int[] colisoes;  // Array para contar as colisões por índice
+    int totalColisoes; // Variável para armazenar o número total de colisões
 
     public TabelaHash() {
         tabela = new ArrayList<>(tamanho);
         colisoes = new int[tamanho];  // Inicializa o array de colisões
+        totalColisoes = 0;  // Inicializa o contador total de colisões
         for(int i = 0; i < tamanho; i++){
             tabela.add(new LinkedList<>());
             colisoes[i] = 0;  // Inicializa a contagem de colisões em zero
@@ -23,18 +25,18 @@ public class TabelaHash {
         try (BufferedReader br = new BufferedReader(new FileReader(path))) {
             String linha;
 
-            while((linha = br.readLine()) != null){
+            while ((linha = br.readLine()) != null) {
                 String[] dadosLinha = linha.split(", ");
                 inserir(dadosLinha);
             }
-        } catch(IOException e){
+        } catch(IOException e) {
             e.printStackTrace();
         }
     }
 
     private int funcaoHash(String chave) {
         int hash = 0;
-        for(int i = 0; i < chave.length(); i++){
+        for (int i = 0; i < chave.length(); i++) {
             hash = (25 * hash + chave.charAt(i)) % tamanho;
         }
         return hash;
@@ -46,7 +48,8 @@ public class TabelaHash {
 
         // Verifica se já existe algum dado nesta posição (indica uma colisão)
         if (!tabela.get(index).isEmpty()) {
-            colisoes[index]++;  // Incrementa a contagem de colisões
+            colisoes[index]++;  // Incrementa a contagem de colisões por índice
+            totalColisoes++;     // Incrementa o contador total de colisões
         }
 
         // Insere o novo dado na lista encadeada
@@ -56,8 +59,8 @@ public class TabelaHash {
     public String[] buscar(String chave) {
         int index = funcaoHash(chave);
 
-        for(String[] dado : tabela.get(index)){
-            if(dado[0].equals(chave)){
+        for (String[] dado : tabela.get(index)) {
+            if (dado[0].equals(chave)) {
                 return dado;
             }
         }
@@ -83,5 +86,10 @@ public class TabelaHash {
                 System.out.println("Índice " + i + " - " + colisoes[i] + " colisões");
             }
         }
+    }
+
+    // Método para imprimir o total de colisões
+    public void printTotalColisoes() {
+        System.out.println("\nTotal de colisões: " + totalColisoes);
     }
 }
