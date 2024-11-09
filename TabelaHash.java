@@ -24,7 +24,6 @@ public class TabelaHash {
     public void loadDados(String path) {
         try (BufferedReader br = new BufferedReader(new FileReader(path))) {
             String linha;
-
             while ((linha = br.readLine()) != null) {
                 String[] dadosLinha = linha.split(", ");
                 inserir(dadosLinha);
@@ -46,12 +45,11 @@ public class TabelaHash {
         String chave = dado[0];
         int index = funcaoHash(chave);
 
-
+        // Verifica se há colisão
         if (!tabela.get(index).isEmpty()) {
             colisoes[index]++;
             totalColisoes++;
         }
-
 
         tabela.get(index).add(dado);
     }
@@ -78,8 +76,30 @@ public class TabelaHash {
         }
     }
 
-    // Método para imprimir o total de colisões
-    public void printTotalColisoes() {
+    // Método para gerar relatório com colisões, tempos e distribuição das chaves
+    public void gerarRelatorio(long tempoInsercao, long tempoBusca) {
+        System.out.println("\n===== RELATÓRIO =====");
         System.out.println("\nTotal de colisões: " + totalColisoes);
+        System.out.println("\nTempo de inserção total (em nanossegundos): " + tempoInsercao);
+        System.out.println("Tempo de busca total (em nanossegundos): " + tempoBusca);
+        System.out.println("Tempo de inserção total (em milissegundos): " + tempoInsercao / 1_000_000.0);
+        System.out.println("Tempo de busca total (em milissegundos): " + tempoBusca / 1_000_000.0);
+
+
+        System.out.println("\nNúmero de colisões por índice:");
+        for (int i = 0; i < tamanho; i++) {
+            if (colisoes[i] > 0) {
+                System.out.println("Índice: " + i + " - Colisões: " + colisoes[i]);
+            }
+        }
+
+        System.out.println("\nDistribuição das chaves (quantidade de chaves em cada posição):");
+        for (int i = 0; i < tamanho; i++) {
+            if (!tabela.get(i).isEmpty()) {
+                System.out.println("Índice " + i + " - " + tabela.get(i).size() + " chaves");
+            }
+        }
+
+
     }
 }
