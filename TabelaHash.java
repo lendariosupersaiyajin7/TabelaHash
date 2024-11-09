@@ -8,16 +8,16 @@ import java.util.List;
 public class TabelaHash {
     List<LinkedList<String[]>> tabela;
     int tamanho = 7927;
-    int[] colisoes;  // Array para contar as colisões por índice
-    int totalColisoes; // Variável para armazenar o número total de colisões
+    int[] colisoes;
+    int totalColisoes;
 
     public TabelaHash() {
         tabela = new ArrayList<>(tamanho);
-        colisoes = new int[tamanho];  // Inicializa o array de colisões
-        totalColisoes = 0;  // Inicializa o contador total de colisões
+        colisoes = new int[tamanho];
+        totalColisoes = 0;
         for(int i = 0; i < tamanho; i++){
             tabela.add(new LinkedList<>());
-            colisoes[i] = 0;  // Inicializa a contagem de colisões em zero
+            colisoes[i] = 0;
         }
     }
 
@@ -34,7 +34,7 @@ public class TabelaHash {
         }
     }
 
-    private int funcaoHash(String chave) {
+    int funcaoHash(String chave) {
         int hash = 0;
         for (int i = 0; i < chave.length(); i++) {
             hash = (25 * hash + chave.charAt(i)) % tamanho;
@@ -46,13 +46,13 @@ public class TabelaHash {
         String chave = dado[0];
         int index = funcaoHash(chave);
 
-        // Verifica se já existe algum dado nesta posição (indica uma colisão)
+
         if (!tabela.get(index).isEmpty()) {
-            colisoes[index]++;  // Incrementa a contagem de colisões por índice
-            totalColisoes++;     // Incrementa o contador total de colisões
+            colisoes[index]++;
+            totalColisoes++;
         }
 
-        // Insere o novo dado na lista encadeada
+
         tabela.get(index).add(dado);
     }
 
@@ -75,16 +75,6 @@ public class TabelaHash {
                 System.out.print(dado[0] + " ");
             }
             System.out.println();
-        }
-    }
-
-    // Método para imprimir as colisões por índice
-    public void printColisoes() {
-        System.out.println("\nContagem de Colisões por Índice:");
-        for (int i = 0; i < tamanho; i++) {
-            if (colisoes[i] > 0) {
-                System.out.println("Índice " + i + " - " + colisoes[i] + " colisões");
-            }
         }
     }
 
