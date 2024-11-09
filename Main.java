@@ -8,6 +8,7 @@ public class Main {
         hashTable.loadDados(path);
         long fimInsercao = System.nanoTime();
         long inicioBusca = System.nanoTime();
+
         String chaveBusca = "Dione";
         String[] resultado = hashTable.buscar(chaveBusca);
         long fimBusca = System.nanoTime();
